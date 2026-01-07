@@ -266,7 +266,7 @@ $(document).ready(function () {
   $("#logout").on("click", function (e) {
     e.preventDefault();
   sessionStorage.removeItem("usuarioLogueado");
-  window.location.replace("./index.html");
+  window.location.replace("../../index.html");
   });
 
   /* ---------- ver contactos y agregar ---------- */
