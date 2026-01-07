@@ -14,4 +14,9 @@ Se agrega valores para que el login funciones mejor, se pule el sesion, ademas d
 
 **v. 1.0**
 
-Se termina agregando el deposito y validaciones para restringir el uso, ademas de verificar bien el trabajo del login, 
+Se termina agregando el deposito y validaciones para restringir el uso, ademas de verificar bien el trabajo del login.
+
+**v. 1.1**
+
+Se realizan correcciones en el manejo del session y en el manejo de los localstorage.
+

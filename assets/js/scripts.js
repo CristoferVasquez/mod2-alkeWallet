@@ -5,17 +5,24 @@ function validarEmail(email) {
   return regex.test(email);
 }
 
-const infoContactos = JSON.parse(localStorage.getItem("contactos")) || [];
-const infoMovimientos = JSON.parse(localStorage.getItem("movimientos")) || [];
+if (!localStorage.getItem("contactos")) {
+  localStorage.setItem("contactos", JSON.stringify([]));
+}
+
+if (!localStorage.getItem("movimientos")) {
+  localStorage.setItem("movimientos", JSON.stringify([]));
+}
 
 
 function calcularSaldo() {
   let saldo = 0;
-  infoMovimientos.forEach(mov => {
+  const movimientos = JSON.parse(localStorage.getItem("movimientos")) || [];
+
+  movimientos.forEach(mov => {
     saldo += mov.tipo ? mov.monto : -mov.monto;
-    });
+  });
+
   $("#saldo").text(`$ ${saldo.toLocaleString("es-CL")}`);
-        
 }
 
 function obtenerSaldoActual() {
@@ -28,10 +35,6 @@ function obtenerSaldoActual() {
 
   return saldo;
 }
-
-localStorage.setItem("contactos", JSON.stringify(infoContactos));
-localStorage.setItem("movimientos", JSON.stringify(infoMovimientos));
-
 
 function obtenerContactos() {
   return JSON.parse(localStorage.getItem("contactos")) || [];
@@ -179,7 +182,7 @@ $(document).ready(function () {
   /* ---------- router ---------- */
 
   const pagina = window.location.pathname.split("/").pop();
-  const usuarioLogueado = localStorage.getItem("usuarioLogueado");
+  const usuarioLogueado = sessionStorage.getItem("usuarioLogueado");
 
   if ((pagina === "" || pagina === "index.html") && !usuarioLogueado) {
     window.location.replace("./assets/pages/login.html");
@@ -246,7 +249,7 @@ $(document).ready(function () {
 
     if (!email || !validarEmail(email) || password.length < 6) return;
 
-    localStorage.setItem("usuarioLogueado", "true");
+    sessionStorage.setItem("usuarioLogueado", "true");
     $("#loader").removeClass("d-none");
 
     setTimeout(() => {
@@ -259,11 +262,11 @@ $(document).ready(function () {
     $("#loader").removeClass("d-none");
     setTimeout(() => window.location.href = url, 1500);
   });
-
+  /*-----------------Logout------------------ */
   $("#logout").on("click", function (e) {
     e.preventDefault();
-    localStorage.removeItem("usuarioLogueado");
-    window.location.replace("../../index.html");
+  sessionStorage.removeItem("usuarioLogueado");
+  window.location.replace("./index.html");
   });
 
   /* ---------- ver contactos y agregar ---------- */
