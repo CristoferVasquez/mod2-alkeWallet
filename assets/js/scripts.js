@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+//funcion para validar el formato del email ingresado
 function validarFormatoEmail(email) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return regex.test(email);
@@ -36,7 +37,7 @@ function validarFormatoEmail(email) {
 
 $(document).ready(function () {
 
-// inicio de validacion validacion e ingreso de datos de form
+// validacion e ingreso de datos de formulario-login
     $("#emailSesion").on("input", function () {
         let email = $(this).val().trim();
 
@@ -90,7 +91,7 @@ $(document).ready(function () {
         }, 2000);
     });
 
-/* fin validacion de email
+/* fin validacion de datos de login y aceptacion del login
 ----------------------------------------------------------------------*/
 
 
