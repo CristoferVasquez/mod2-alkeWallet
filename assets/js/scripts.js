@@ -8,6 +8,27 @@ function validarEmail(email) {
 const infoContactos = JSON.parse(localStorage.getItem("contactos")) || [];
 const infoMovimientos = JSON.parse(localStorage.getItem("movimientos")) || [];
 
+
+function calcularSaldo() {
+  let saldo = 0;
+  infoMovimientos.forEach(mov => {
+    saldo += mov.tipo ? mov.monto : -mov.monto;
+    });
+  $("#saldo").text(`$ ${saldo.toLocaleString("es-CL")}`);
+        
+}
+
+function obtenerSaldoActual() {
+  let saldo = 0;
+  const movimientos = JSON.parse(localStorage.getItem("movimientos")) || [];
+
+  movimientos.forEach(mov => {
+    saldo += mov.tipo ? mov.monto : -mov.monto;
+  });
+
+  return saldo;
+}
+
 localStorage.setItem("contactos", JSON.stringify(infoContactos));
 localStorage.setItem("movimientos", JSON.stringify(infoMovimientos));
 
@@ -242,7 +263,7 @@ $(document).ready(function () {
   $("#logout").on("click", function (e) {
     e.preventDefault();
     localStorage.removeItem("usuarioLogueado");
-    window.location.replace("/index.html");
+    window.location.replace("../../index.html");
   });
 
   /* ---------- ver contactos y agregar ---------- */
@@ -306,13 +327,15 @@ $(document).ready(function () {
     $(`.flujo-envio[data-index="${index}"]`).removeClass("d-none");
   });
 
-  $(document).on("input", ".monto-input", function () {
-    const monto = Number($(this).val());
-    $(this)
-      .closest(".flujo-envio")
-      .find(".btn-enviar")
-      .prop("disabled", !(monto > 0));
-  });
+$(document).on("input", ".monto-input", function () {
+  const monto = Number($(this).val());
+  const saldo = obtenerSaldoActual();
+
+  $(this)
+    .closest(".flujo-envio")
+    .find(".btn-enviar")
+    .prop("disabled", !(monto > 0 && monto <= saldo));
+});
 
   $(document).on("click", ".btn-enviar", function () {
     const flujo = $(this).closest(".flujo-envio");
@@ -320,6 +343,13 @@ $(document).ready(function () {
     const monto = Number(flujo.find(".monto-input").val());
 
     if (!(monto > 0)) return;
+    
+    const saldoActual = obtenerSaldoActual();
+
+  if (monto > saldoActual) {
+    alert("Saldo insuficiente. El monto a transferir supera el saldo disponible.");
+    return;
+  }
 
     const contacto = contactos.find(c => c._index === index);
 
@@ -349,11 +379,46 @@ $(document).ready(function () {
   });
 
 
-    /*-----------Mostrar los movimientos y filtro */
+    /*-----------Mostrar los movimientos y filtro--------------- */
     mostrarUltimosMovimientos("todos");
 
     $("#filtroMovimientos").on("change", function () {
         mostrarUltimosMovimientos($(this).val());
     });
+
+    /*-----------------Depositos-------------- */
+
+    calcularSaldo();
+
+    $("#depositForm").on("submit", function (e) {
+        e.preventDefault();
+
+        const monto = parseInt($("#depositAmount").val());
+        if (isNaN(monto) || monto <= 0) return;
+
+        infoMovimientos.push({
+            data: "Depósito",
+            tipo: true,
+            Categoria:"deposito_misma_cuenta",
+            monto
+        });
+
+        localStorage.setItem("movimientos", JSON.stringify(infoMovimientos));
+        calcularSaldo();
+
+        $("#alert-container").html(`
+            <div class="alert alert-success text-center fade show">
+                 Depósito realizado por <strong>$${monto.toLocaleString("es-CL")}</strong><br>
+                <small>Redirigiendo al menú principal...</small>
+            </div>
+        `);
+
+        $("#depositAmount").val("");
+
+        setTimeout(() => {
+            window.location.href = "menu.html";
+        }, 2000);
+    });
+
 
 });
