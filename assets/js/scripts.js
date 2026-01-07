@@ -262,11 +262,13 @@ $(document).ready(function () {
     $("#loader").removeClass("d-none");
     setTimeout(() => window.location.href = url, 1500);
   });
+
   /*-----------------Logout------------------ */
+
   $("#logout").on("click", function (e) {
     e.preventDefault();
   sessionStorage.removeItem("usuarioLogueado");
-  window.location.replace("./index.html");
+  window.location.replace("../../index.html");
   });
 
   /* ---------- ver contactos y agregar ---------- */
@@ -383,6 +385,7 @@ $(document).on("input", ".monto-input", function () {
 
 
     /*-----------Mostrar los movimientos y filtro--------------- */
+    
     mostrarUltimosMovimientos("todos");
 
     $("#filtroMovimientos").on("change", function () {
