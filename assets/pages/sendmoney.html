@@ -37,9 +37,113 @@
         </div>
     </nav>
 </header>
-<main></main>
-<footer class="bg-dark text-white text-center py-3 mt-5 fixed-bottom">
-        © 2025 Todos los derechos reservados
+<main>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-12">
+
+        <div class="card shadow">
+          <div class="card-body">
+
+            <h2 class="card-title text-center mb-4">Enviar Dinero</h2>
+
+            <form id="tranferenciaForm">
+
+              <div class="form-group">
+                <label for="searchContact">
+                  Buscar en la agenda de transferencias
+                </label>
+
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" id="searchContact"
+                         placeholder="Buscar por nombre, alias o CBU">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            title="Agregar nuevo contacto"
+                            data-toggle="modal"
+                            data-target="#modalContacto">
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <h5 class="mb-3" hidden>Filtro</h5>
+                <ul id="filtroContactos" class="list-group mb-4"></ul>
+              </div>
+
+              <h5 class="mb-3">Contactos</h5>
+              <ul id="listaContactos" class="list-group mb-4"></ul>
+            </form>
+
+            <div class="modal fade" id="modalContacto" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title">Nuevo contacto</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                      <span>&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <input id="nombre" class="form-control mb-2" placeholder="Nombre">
+                    <input id="apellido" class="form-control mb-2" placeholder="Apellido">
+                    <input id="cbu" class="form-control mb-2" placeholder="CBU">
+                    <input id="alias" class="form-control mb-2" placeholder="Alias">
+                    <input id="banco" class="form-control mb-2" placeholder="Banco">
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                      Cancelar
+                    </button>
+                    <button type="button" class="btn btn-success" id="btnGuardarContacto">
+                      Guardar
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <a href="menu.html" class="btn btn-outline-secondary mt-3">
+              Volver al Menú Principal
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="modal fade" id="modalExito" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title text-success">Transacción exitosa</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <p class="mb-0">La transferencia se realizó correctamente.</p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success" data-bs-dismiss="modal">
+          Aceptar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+</main>
+
+<footer class="bg-dark text-white text-center py-3 fixed-bottom">
+  © 2025 Todos los derechos reservados
 </footer>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
