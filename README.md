@@ -11,3 +11,7 @@ ademas de agrega funcionalidad de login con validaciones correspondientes
 
 **v 0.27**
 Se agrega valores para que el login funciones mejor, se pule el sesion, ademas de trabajar con las validaciones para las diferentes direcciones existentes, igualmente se genera funcionalidad de menu, navbar en transactions.html y sendmoney.html
+
+**v. 1.0**
+
+Se termina agregando el deposito y validaciones para restringir el uso, ademas de verificar bien el trabajo del login, 
