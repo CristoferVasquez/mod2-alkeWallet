@@ -179,6 +179,8 @@ function formatearCategoria(categoria) {
 
 $(document).ready(function () {
 
+  let infoMovimientos = JSON.parse(localStorage.getItem("movimientos")) || [];
+
   /* ---------- router ---------- */
 
   const pagina = window.location.pathname.split("/").pop();
